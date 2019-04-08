@@ -1,0 +1,20 @@
+<div class="container">
+  <app-bank-chooser (selected)="onBankSelected($event)"></app-bank-chooser>
+
+  <div *ngIf="hasFields">
+    <form (ngSubmit)="validate()" #connectionForm="ngForm">
+      <mat-form-field *ngFor="let field of fields">
+        <input *ngIf="!field.isList" matInput="" [type]="field.type" [name]="field.name" [placeholder]="field.label"
+          [required]="field.required" [pattern]="field.regex" [(ngModel)]="model[field.name]">
+        <div *ngIf="field.isList">
+          <mat-select [(ngModel)]="model[field.name]" [name]="field.name" [placeholder]="field.label">
+            <mat-option *ngFor="let value of field.values" [value]="value.value" [innerHtml]="value.label">
+            </mat-option>
+          </mat-select>
+        </div>
+      </mat-form-field>
+      <button type="submit" mat-raised-button="" color="primary" *ngIf="fields.length"
+        [disabled]="!connectionForm.form.valid">Valider</button>
+    </form>
+  </div>
+</div>

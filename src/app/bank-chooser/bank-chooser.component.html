@@ -1,0 +1,10 @@
+<mat-form-field>
+  <input type="text" placeholder="Banque" matInput="" [formControl]="bankControl" [matAutocomplete]="auto">
+  <mat-spinner matSuffix="" *ngIf="loading" diameter="20"></mat-spinner>
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="getName"
+    (optionSelected)="onSelectedBankChanged($event.option.value)">
+    <mat-option *ngFor="let bank of filteredBanks | async; trackBy: trackBank" [value]="bank">
+      {{bank.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
